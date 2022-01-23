@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.alefgallery.R
 import com.example.alefgallery.data.entities.GalleryList
 import com.example.alefgallery.databinding.ActivityMainBinding
 import com.example.alefgallery.presentation.adapter.GalleryAdapter
@@ -60,7 +61,8 @@ class MainActivity : AppCompatActivity() {
         })
     }
     private fun retrieveList(galleryListData: GalleryList){
-        val rows = galleryListData.urls.chunked(2)
+        val size = if (resources.getBoolean(R.bool.isTablet)) 3 else 2
+        val rows = galleryListData.urls.chunked(size)
         galleryAdapter.submitList(rows)
     }
 }

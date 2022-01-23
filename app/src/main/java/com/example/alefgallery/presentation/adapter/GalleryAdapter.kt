@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alefgallery.R
 import com.squareup.picasso.Picasso
+import kotlin.coroutines.coroutineContext
 
 class GalleryAdapter(): ListAdapter<List<String>, GalleryAdapter.GalleryViewHolder>(
 object : DiffUtil.ItemCallback<List<String>>() {
@@ -20,11 +21,11 @@ object : DiffUtil.ItemCallback<List<String>>() {
 }
 ) {
 
-
-     class GalleryViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+    class GalleryViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val itemImage1: ImageView = itemView.findViewById(R.id.item1)
         val itemImage2: ImageView = itemView.findViewById(R.id.item2)
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GalleryViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_gallery, parent, false)
@@ -44,6 +45,16 @@ object : DiffUtil.ItemCallback<List<String>>() {
                 .placeholder(R.drawable.empty_image)
                 .fit()
                 .into(holder.itemImage2)
+
+
+            if (holder.itemImage1.context.resources.getBoolean(R.bool.isTablet)){
+                val itemImage3: ImageView = holder.itemView.findViewById(R.id.item3)
+                Picasso.get()
+                    .load(urls[2])
+                    .placeholder(R.drawable.empty_image)
+                    .fit()
+                    .into(itemImage3)
+            }
         }
     }
 }
